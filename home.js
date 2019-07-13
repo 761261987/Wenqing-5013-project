@@ -76,7 +76,14 @@ function getAllQuizes() {
 }
 
 function login() {
-    document.getElementById("contents").style.visibility = "visible";
+    alert("Please enter your username and password. ");
+    username = prompt("Username:", "");
+    var password = prompt("Password:", "");
+    if (username in USERNAME_PASSWORD && USERNAME_PASSWORD[username] === password) {
+        document.getElementById("contents").style.visibility = "visible";
+    } else {
+        login();
+    }
 
     document.getElementById("quizes").innerHTML = getAllQuizes();
 }
