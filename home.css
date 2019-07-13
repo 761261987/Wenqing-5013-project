@@ -1,0 +1,19 @@
+body {
+     background-color: #BFCFD0;
+     visibility: hidden;
+}
+ .title {
+     background-color: #085359;
+     color: #E1DEED;
+     padding: 20px;
+}
+ .intro-video {
+     padding: 10px;
+}
+ .row-quiz {
+     padding: 10px;
+}
+ .col-centered {
+     float: none;
+     margin: 0 auto;
+}
