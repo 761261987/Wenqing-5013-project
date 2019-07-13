@@ -1,4 +1,4 @@
-let USERNAME_PASSWORD = { "Alice": "123456", "Bob": "abc123" };
+let USERNAME_PASSWORD = { "Alice": "123456", "Bob": "abc123", "Catherine": "abcdef" };
 let QUIZES = {
     "1": {
         "question": "Which of the 3 highest mountains does not belong to Himalaya range?",
