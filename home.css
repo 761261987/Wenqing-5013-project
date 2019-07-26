@@ -1,11 +1,14 @@
 body {
      background-color: #BFCFD0;
-     visibility: hidden;
 }
  .title {
      background-color: #085359;
      color: #E1DEED;
      padding: 20px;
+}
+ .login-panel {
+    background-color: #ffffff;
+    padding: 10px;
 }
  .intro-video {
      padding: 10px;
@@ -16,4 +19,16 @@ body {
  .col-centered {
      float: none;
      margin: 0 auto;
+} 
+ #email {
+    display:inline;
+    width:auto;
+}
+ #password {
+    display:inline;
+    width:auto;
+}
+ #welcome-message {
+     display:inline-block;
+     margin-right:10px;
 }

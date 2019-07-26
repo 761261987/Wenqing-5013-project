@@ -1,4 +1,3 @@
-let USERNAME_PASSWORD = { "Alice": "123456", "Bob": "abc123", "Catherine": "abcdef" };
 let QUIZES = {
     "1": {
         "question": "Which of the 3 highest mountains does not belong to Himalaya range?",
@@ -34,20 +33,34 @@ let QUIZES = {
     }
 };
 
-var username;
 var email;
+
+function initApp() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            email = user.email;
+            document.getElementById("signin-panel").hidden = true;
+            document.getElementById("signout-panel").hidden = false;
+            document.getElementById("course-contents").hidden = false;
+            document.getElementById("quizes").innerHTML = getAllQuizes();
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
+            document.getElementById("welcome-message").innerHTML = "Welcome " + email.substring(0, email.indexOf('@')) + "!";
+        } else {
+            document.getElementById("signin-panel").hidden = false;
+            document.getElementById("signout-panel").hidden = true;
+            document.getElementById("course-contents").hidden = true;
+        }
+    })
+}
 
 function getQuiz(quizId) {
     var quiz = `<li>${QUIZES[quizId]["question"]}</li>`;
     quiz += `<div class="row row-quiz" id="question${quizId}Group">`;
 
     var option;
-    for (option = 1; option <= 4; option++) {
-        if (option < 4) {
-            quiz += '<div class="col-md-2 col-sm-12">';
-        } else {
-            quiz += '<div class="col-md-3 col-sm-12">';
-        }
+    for (option = 1; option < 5; option++) {
+        quiz += '<div class="col-md-3 col-sm-12">';
         quiz += "<label>";
         quiz += `<input type="checkbox" name="question${quizId}" value="option${option}">`;
         quiz += QUIZES[quizId]["option" + option];
@@ -55,7 +68,7 @@ function getQuiz(quizId) {
         quiz += "</div>";
     }
 
-    quiz += '<div class="col-md-2 col-sm-12">';
+    quiz += '<div class="col-xs-2 col-xs-offset-5">';
     quiz += `<button class="btn btn-default" id="question${quizId}Check" onclick="checkAnswer(${quizId})">`;
     quiz += "Check answer";
     quiz += "</button>";
@@ -76,16 +89,43 @@ function getAllQuizes() {
 }
 
 function login() {
-    alert("Please enter your username and password. ");
-    username = prompt("Username:", "");
-    var password = prompt("Password:", "");
-    if (username in USERNAME_PASSWORD && USERNAME_PASSWORD[username] === password) {
-        document.getElementById("contents").style.visibility = "visible";
-    } else {
-        login();
+    email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    if (!isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    if (password.length < 1) {
+        alert('Please enter a valid password.');
+        return;
     }
 
-    document.getElementById("quizes").innerHTML = getAllQuizes();
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+        alert(error.message);
+    });
+}
+
+function signup() {
+    email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    if (!isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    if (password.length < 1) {
+        alert('Please enter a valid password.');
+        return;
+    }
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+        alert(error.message);
+    });
+}
+
+function logout() {
+    firebase.auth().signOut();
 }
 
 function checkAnswer(quizId) {
@@ -113,20 +153,15 @@ function checkAnswer(quizId) {
     }
 }
 
-function getEmail() {
-    email = document.querySelector('#yourEmail').value;
-}
-
-function isValidEmail() {
-    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email));
+function isValidEmail(emailAddress) {
+    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(emailAddress));
 }
 
 function disableOrEnableEvaluationSubmitButton() {
-    getEmail();
     var selectReasonDropdown = document.getElementById("sel1");
     var selectedReasonValue = selectReasonDropdown.options[selectReasonDropdown.selectedIndex].value;
 
-    if (isValidEmail() && selectedReasonValue != "1" && (selectedReasonValue != "5" || document.querySelector('#detailedReason').value)) {
+    if (isValidEmail(email) && selectedReasonValue != "1" && (selectedReasonValue != "5" || document.querySelector('#detailedReason').value)) {
         document.getElementById("submitButton").disabled = false;
     } else {
         document.getElementById("submitButton").disabled = true;
@@ -134,9 +169,7 @@ function disableOrEnableEvaluationSubmitButton() {
 }
 
 function checkEmail() {
-    getEmail();
-
-    if (isValidEmail()) {
+    if (isValidEmail(email)) {
         document.querySelector('#yourEmail').style.backgroundColor = "LimeGreen";
     } else {
         document.querySelector('#yourEmail').style.backgroundColor = "red";
@@ -166,5 +199,5 @@ function checkReason() {
 }
 
 function submitForm() {
-    alert(username + ": your evaluation has been submitted! ");
+    alert(email.substring(0, email.indexOf('@')) + ": your evaluation has been submitted! ");
 }

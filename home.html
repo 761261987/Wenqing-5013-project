@@ -1,14 +1,32 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="./home.css" />
 </head>
 
-<body id="contents" onload="login()">
+<body onload="initApp()">
     <div class="title">
         <h1>The Peaks</h1>
         <h4>The 3 highest mountains in the world.</h4>
     </div>
-    <div class="container">
+
+    <div class="login-panel" id="signin-panel" align="right">
+        <input class="mdl-textfield__input" type="text" id="email" name="email" placeholder="Email" />
+        &nbsp;&nbsp;&nbsp;
+        <input class="mdl-textfield__input" type="password" id="password" name="password" placeholder="Password" />
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary" id="sign-in" name="signin" onclick="login()">Sign In</button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary" id="sign-up" name="signup" onclick="signup()">Sign Up</button>
+    </div>
+
+    <div class="login-panel" id="signout-panel" align="right" hidden="true">
+        <div id="welcome-message">Welcome</div>
+        <button class=" btn btn-primary" id="sign-out" name="signout" onclick="logout()">Sign Out</button>
+    </div>
+
+    <div class="container" id="course-contents" hidden="true">
         <div class="col-xs-10 col-xs-offset-1">
             <div class="intro-video">
                 <div class="embed-responsive embed-responsive-16by9">
@@ -24,63 +42,78 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="thumbnail">
                     <img
                         src="https://thumbor-static.factorymedia.com/TZD7GOF7bgSZHtot1Q32X7idiX0=/1800x1200/smart/http%3A%2F%2Fcoresites-cdn.factorymedia.com%2Fmpora_new%2Fwp-content%2Fuploads%2F2017%2F07%2FHighest-Mountain-In-The-World.jpg">
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <h3>Mount Everest</h3>
                 <p>Mount Everest is the world’s highest mountain. Its peak is an eye-watering 8,848 metres above sea
-                    level, making it well over eight times taller than the highest mountain in Wales (Snowdon, at 1,085
+                    level, making it well over eight times taller than the highest mountain in Wales (Snowdon, at
+                    1,085
                     metres above sea level).</p>
                 <p>Everest is situated on the border between Nepal and the autonomous region of Tibet. Officially
-                    speaking, the first successful Everest climbers were Sir Edmund Hillary and Tenzing Norgay in 1953.
+                    speaking, the first successful Everest climbers were Sir Edmund Hillary and Tenzing Norgay in
+                    1953.
                     It is estimated that there is well over 200 dead bodies on Everest, all of them remarkably
                     well-preserved because of the extremely cold temperatures.</p>
-                <p>Everest is part of the Seven Summits. The Seven Summits is a list made up of the highest mountain on
-                    each of the world’s seven continents. Climbing all seven of the Seven Summits is one of the ultimate
+                <p>Everest is part of the Seven Summits. The Seven Summits is a list made up of the highest mountain
+                    on
+                    each of the world’s seven continents. Climbing all seven of the Seven Summits is one of the
+                    ultimate
                     achievements in the sport of mountaineering.</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="thumbnail">
                     <img
                         src="https://thumbor-static.factorymedia.com/4ZY3nf6gQkaR8LENT08rgWJnUR8=/1800x1200/smart/http%3A%2F%2Fcoresites-cdn.factorymedia.com%2Fmpora_new%2Fwp-content%2Fuploads%2F2017%2F07%2FK2.jpg">
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <h3>K2 (Mount Godwin-Austen)</h3>
                 <p>K2, also known officially as Mount Godwin-Austen or Chhogori, has a summit 8,611 metres above sea
-                    level. It is located on the border between China and Pakistan. The Chinese side of the mountain is
-                    widely considered to be the more difficult and hazardous side, so the summit is usually attempted
+                    level. It is located on the border between China and Pakistan. The Chinese side of the mountain
+                    is
+                    widely considered to be the more difficult and hazardous side, so the summit is usually
+                    attempted
                     from the Pakistan side.</p>
-                <p>Behind Annapurna, K2 has the second highest fatality rate of any mountain with a height over 8,000
-                    metres. Approximately speaking, there’s one death for every four successful climbs; justifying its
+                <p>Behind Annapurna, K2 has the second highest fatality rate of any mountain with a height over
+                    8,000
+                    metres. Approximately speaking, there’s one death for every four successful climbs; justifying
+                    its
                     nickname as the “Savage Mountain.” Unlike with the other 8,000 metre peaks, nobody has ever
                     successfully ascended K2 in winter.</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="thumbnail">
                     <img
                         src="https://thumbor-static.factorymedia.com/PP4od1tWEFU1Lw5pzW-g1Ol8zpc=/1500x996/smart/http%3A%2F%2Fcoresites-cdn.factorymedia.com%2Fmpora_new%2Fwp-content%2Fuploads%2F2017%2F07%2FThird-Highest-Mountain-In-The-World.jpg">
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-12">
                 <h3>Kangchenjunga</h3>
-                <p>Kangchenjunga is a mountain that’s impossible to pronounce after a full crate of beers. It’s also,
-                    perhaps more importantly than that, the third highest mountain in the world. It sits on the border
+                <p>Kangchenjunga is a mountain that’s impossible to pronounce after a full crate of beers. It’s
+                    also,
+                    perhaps more importantly than that, the third highest mountain in the world. It sits on the
+                    border
                     between Nepal and India, and has an elevation of 8,586 metres.</p>
-                <p>Located approximately 125 kilometres from Everest, Kangchenjunga is the second highest mountain in
-                    the Himalayas. Up until 1852, it was assumed to be the world’s highest mountain. However after some
-                    clever calculating, and presumably some recalculating to make sure, it was announced that Everest
-                    was in fact the highest mountain in the world with Kangchenjunga having to settle for third place.
+                <p>Located approximately 125 kilometres from Everest, Kangchenjunga is the second highest mountain
+                    in
+                    the Himalayas. Up until 1852, it was assumed to be the world’s highest mountain. However after
+                    some
+                    clever calculating, and presumably some recalculating to make sure, it was announced that
+                    Everest
+                    was in fact the highest mountain in the world with Kangchenjunga having to settle for third
+                    place.
                 </p>
-                <p>There is a tradition when ascending Kangchenjunga to stop just short of the summit. This dates back
+                <p>There is a tradition when ascending Kangchenjunga to stop just short of the summit. This dates
+                    back
                     to the first successful climb of the mountain by Joe Brown and George Brand in 1955. Brown and
                     Brand, who were part of a British expedition, made a promise to regional monarchs know as the
                     Chogyal that the mountain’s summit would remain pure. Every climber since then has followed the
@@ -141,10 +174,12 @@
             <div class="col-xs-11 col-xs-offset-1">
                 <li><a href="https://en.wikipedia.org/wiki/List_of_highest_mountains_on_Earth"
                         target="_blank">Wikipedia: List of highest mountains on Earth</a></li>
-                <li><a href="https://en.wikipedia.org/wiki/Mount_Everest" target="_blank">Wikipedia: Mount Everest</a>
+                <li><a href="https://en.wikipedia.org/wiki/Mount_Everest" target="_blank">Wikipedia: Mount
+                        Everest</a>
                 </li>
                 <li><a href="https://en.wikipedia.org/wiki/K2" target="_blank">Wikipedia: K2</a></li>
-                <li><a href="https://en.wikipedia.org/wiki/Kangchenjunga" target="_blank">Wikipedia: Kangchenjunga</a>
+                <li><a href="https://en.wikipedia.org/wiki/Kangchenjunga" target="_blank">Wikipedia:
+                        Kangchenjunga</a>
                 </li>
                 <li><a href="https://mpora.com/mountaineering-expeditions/highest-mountain-in-the-world-everest"
                         target="_blank">Highest Mountain In The World | Top 10</a></li>
@@ -171,11 +206,6 @@
             <div class="panel panel-info">
                 <div class="panel-body">
                     <form>
-                        <div class="form-group">
-                            <label for="yourEmail">Email address</label>
-                            <input type="email" class="form-control" id="yourEmail" placeholder="Email"
-                                onchange="checkEmail()">
-                        </div>
                         <div class="form-group">
                             <label for="sel1">What is the main reason why you took this course</label>
                             <select class="form-control" id="sel1" onchange="checkReason()">
@@ -211,11 +241,34 @@
         </div>
         <div class="row">
             <div class="col-xs-11 col-xs-offset-1">
-                <p><a href="https://hackmd.io/QBV1LIjPRhW0MNUZk-EyhA" target="_blank">Link to the hackmd document</a>
+                <p><a href="https://hackmd.io/QBV1LIjPRhW0MNUZk-EyhA" target="_blank">Link to the hackmd
+                        document</a>
                 </p>
             </div>
         </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#config-web-app -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBROWg_YTvqFnqlMPfv0Hl64MC4rOCH4UI",
+            authDomain: "geolecture-5dfb9.firebaseapp.com",
+            databaseURL: "https://geolecture-5dfb9.firebaseio.com",
+            projectId: "geolecture-5dfb9",
+            storageBucket: "geolecture-5dfb9.appspot.com",
+            messagingSenderId: "758742839856",
+            appId: "1:758742839856:web:fdf6d3cdf15f3d13"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
 
     <script src="./home.js"></script>
 </body>
