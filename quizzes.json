@@ -1,54 +1,46 @@
 {
     "quizzes": [
         {
-            "1": {
-                "question": "Which of the 3 highest mountains does not belong to Himalaya range?",
-                "option1": "Mount Everest",
-                "option2": "K2",
-                "option3": "Kangchenjunga",
-                "option4": "None of them",
-                "answer": [
-                    "option2"
-                ]
-            }
+            "question": "Which of the 3 highest mountains does not belong to Himalaya range?",
+            "option1": "Mount Everest",
+            "option2": "K2",
+            "option3": "Kangchenjunga",
+            "option4": "None of them",
+            "answer": [
+                "option2"
+            ]
         },
         {
-            "2": {
-                "question": "Select all the mountains that are higher than 8,500 meters",
-                "option1": "Mount Everest",
-                "option2": "K2",
-                "option3": "Kangchenjunga",
-                "option4": "None of them",
-                "answer": [
-                    "option1",
-                    "option2",
-                    "option3"
-                ]
-            }
+            "question": "Select all the mountains that are higher than 8,500 meters",
+            "option1": "Mount Everest",
+            "option2": "K2",
+            "option3": "Kangchenjunga",
+            "option4": "None of them",
+            "answer": [
+                "option1",
+                "option2",
+                "option3"
+            ]
         },
         {
-            "3": {
-                "question": "Select all the mountains that are not in Asia",
-                "option1": "Mount Everest",
-                "option2": "K2",
-                "option3": "Kangchenjunga",
-                "option4": "None of them",
-                "answer": [
-                    "option4"
-                ]
-            }
+            "question": "Select all the mountains that are not in Asia",
+            "option1": "Mount Everest",
+            "option2": "K2",
+            "option3": "Kangchenjunga",
+            "option4": "None of them",
+            "answer": [
+                "option4"
+            ]
         },
         {
-            "4": {
-                "question": "Which of the mountains has the highest death rate among the climbers? ",
-                "option1": "Mount Everest",
-                "option2": "K2",
-                "option3": "Kangchenjunga",
-                "option4": "Lhotse",
-                "answer": [
-                    "option2"
-                ]
-            }
+            "question": "Which of the mountains has the highest death rate among the climbers? ",
+            "option1": "Mount Everest",
+            "option2": "K2",
+            "option3": "Kangchenjunga",
+            "option4": "Lhotse",
+            "answer": [
+                "option2"
+            ]
         }
     ]
 }

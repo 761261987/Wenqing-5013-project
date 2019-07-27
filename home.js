@@ -34,6 +34,7 @@ let QUIZES = {
 };
 
 var email;
+var database;
 
 function initApp() {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -42,20 +43,22 @@ function initApp() {
             document.getElementById("signin-panel").hidden = true;
             document.getElementById("signout-panel").hidden = false;
             document.getElementById("course-contents").hidden = false;
-            document.getElementById("quizes").innerHTML = getAllQuizes();
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
             document.getElementById("welcome-message").innerHTML = "Welcome " + email.substring(0, email.indexOf('@')) + "!";
+            getAllQuizzes();
         } else {
             document.getElementById("signin-panel").hidden = false;
             document.getElementById("signout-panel").hidden = true;
             document.getElementById("course-contents").hidden = true;
         }
     })
+
+    database = firebase.database();
 }
 
-function getQuiz(quizId) {
-    var quiz = `<li>${QUIZES[quizId]["question"]}</li>`;
+function getQuiz(quizId, quizContents) {
+    var quiz = `<li>${quizContents[quizId]["question"]}</li>`;
     quiz += `<div class="row row-quiz" id="question${quizId}Group">`;
 
     var option;
@@ -63,7 +66,7 @@ function getQuiz(quizId) {
         quiz += '<div class="col-md-3 col-sm-12">';
         quiz += "<label>";
         quiz += `<input type="checkbox" name="question${quizId}" value="option${option}">`;
-        quiz += QUIZES[quizId]["option" + option];
+        quiz += quizContents[quizId]["option" + option];
         quiz += "</label>";
         quiz += "</div>";
     }
@@ -79,13 +82,16 @@ function getQuiz(quizId) {
     return quiz
 }
 
-function getAllQuizes() {
-    var quiz = "";
-    var quizIndex;
-    for (quizIndex in QUIZES) {
-        quiz += getQuiz(quizIndex);
-    }
-    return quiz;
+function getAllQuizzes() {
+    var quizRef = firebase.database().ref('quizzes');
+    quizRef.on('value', function (snapshot) {
+        let values = snapshot.val();
+        var quiz = "";
+        for (let i = 0; i < values.length; i++) {
+            quiz += getQuiz(i, values)
+        }
+        document.getElementById("quizes").innerHTML = quiz;
+    });
 }
 
 function login() {
