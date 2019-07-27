@@ -1,38 +1,3 @@
-let QUIZES = {
-    "1": {
-        "question": "Which of the 3 highest mountains does not belong to Himalaya range?",
-        "option1": "Mount Everest",
-        "option2": "K2",
-        "option3": "Kangchenjunga",
-        "option4": "None of them",
-        "answer": ["option2"]
-    },
-    "2": {
-        "question": "Select all the mountains that are higher than 8,500 meters",
-        "option1": "Mount Everest",
-        "option2": "K2",
-        "option3": "Kangchenjunga",
-        "option4": "None of them",
-        "answer": ["option1", "option2", "option3"]
-    },
-    "3": {
-        "question": "Select all the mountains that are not in Asia",
-        "option1": "Mount Everest",
-        "option2": "K2",
-        "option3": "Kangchenjunga",
-        "option4": "None of them",
-        "answer": ["option4"]
-    },
-    "4": {
-        "question": "Which of the mountains has the highest death rate among the climbers? ",
-        "option1": "Mount Everest",
-        "option2": "K2",
-        "option3": "Kangchenjunga",
-        "option4": "Lhotse",
-        "answer": ["option2"]
-    }
-};
-
 var email;
 var database;
 
@@ -46,7 +11,7 @@ function initApp() {
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
             document.getElementById("welcome-message").innerHTML = "Welcome " + email.substring(0, email.indexOf('@')) + "!";
-            getAllQuizzes();
+            loadAllQuizzes();
         } else {
             document.getElementById("signin-panel").hidden = false;
             document.getElementById("signout-panel").hidden = true;
@@ -82,7 +47,7 @@ function getQuiz(quizId, quizContents) {
     return quiz
 }
 
-function getAllQuizzes() {
+function loadAllQuizzes() {
     var quizRef = firebase.database().ref('quizzes');
     quizRef.on('value', function (snapshot) {
         let values = snapshot.val();
@@ -90,7 +55,7 @@ function getAllQuizzes() {
         for (let i = 0; i < values.length; i++) {
             quiz += getQuiz(i, values)
         }
-        document.getElementById("quizes").innerHTML = quiz;
+        document.getElementById("quizzes").innerHTML = quiz;
     });
 }
 
@@ -140,22 +105,24 @@ function checkAnswer(quizId) {
     for (var checkboxElement of checkboxEls) {
         studentAnswer.push(checkboxElement.value);
     }
-
-    var checkButton = document.getElementById(`question${quizId}Check`);
     if (studentAnswer.length > 0) {
-        var correctAnswer = QUIZES[quizId]["answer"];
-        correctAnswer.sort();
-        studentAnswer.sort();
+        var quizRef = firebase.database().ref(`quizzes/${quizId}/answer`);
+        quizRef.on('value', function (snapshot) {
+            let correctAnswer = snapshot.val();
+            var checkButton = document.getElementById(`question${quizId}Check`);
+            correctAnswer.sort();
+            studentAnswer.sort();
 
-        if (JSON.stringify(studentAnswer) === JSON.stringify(correctAnswer)) {
-            checkButton.classList.remove('btn-default');
-            checkButton.classList.remove('btn-danger');
-            checkButton.classList.add('btn-success');
-        } else {
-            checkButton.classList.remove('btn-default');
-            checkButton.classList.remove('btn-success');
-            checkButton.classList.add('btn-danger');
-        }
+            if (JSON.stringify(studentAnswer) === JSON.stringify(correctAnswer)) {
+                checkButton.classList.remove('btn-default');
+                checkButton.classList.remove('btn-danger');
+                checkButton.classList.add('btn-success');
+            } else {
+                checkButton.classList.remove('btn-default');
+                checkButton.classList.remove('btn-success');
+                checkButton.classList.add('btn-danger');
+            }
+        });
     }
 }
 
