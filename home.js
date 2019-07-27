@@ -1,5 +1,4 @@
 var email;
-var database;
 
 function initApp() {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -8,18 +7,20 @@ function initApp() {
             document.getElementById("signin-panel").hidden = true;
             document.getElementById("signout-panel").hidden = false;
             document.getElementById("course-contents").hidden = false;
+
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
             document.getElementById("welcome-message").innerHTML = "Welcome " + email.substring(0, email.indexOf('@')) + "!";
+
             loadAllQuizzes();
         } else {
             document.getElementById("signin-panel").hidden = false;
             document.getElementById("signout-panel").hidden = true;
             document.getElementById("course-contents").hidden = true;
+
+            clearEvaluation();
         }
     })
-
-    database = firebase.database();
 }
 
 function getQuiz(quizId, quizContents) {
@@ -160,6 +161,27 @@ function checkReason() {
     disableOrEnableEvaluationSubmitButton();
 }
 
+function clearEvaluation() {
+    document.getElementById("sel1").value = "0";
+    document.querySelector('#sel1').style.backgroundColor = "white";
+    document.getElementById("detailedReason").disabled = true;
+    document.getElementById('detailedReason').value = "";
+    document.getElementById('comment').value = "";
+    document.getElementById("submitButton").disabled = true;
+}
+
 function submitForm() {
-    alert(email.substring(0, email.indexOf('@')) + ": your evaluation has been submitted! ");
+    firebase.database().ref('evaluation').push({
+        email: email,
+        reason: document.getElementById("sel1").value,
+        detailedReason: document.getElementById("detailedReason").value,
+        comments: document.getElementById('comment').value
+    }, function (error) {
+        if (error) {
+            alert("Fail to submit your evaluation. Please try again later. ")
+        } else {
+            alert(email.substring(0, email.indexOf('@')) + ": your evaluation has been submitted! ");
+            clearEvaluation();
+        }
+    });
 }

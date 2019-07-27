@@ -20,6 +20,9 @@ body {
      float: none;
      margin: 0 auto;
 } 
+ .no-top-margin {
+     margin-top: 0px;
+ }
  #email {
     display:inline;
     width:auto;
