@@ -168,17 +168,6 @@ function disableOrEnableEvaluationSubmitButton() {
     }
 }
 
-function checkEmail() {
-    if (isValidEmail(email)) {
-        document.querySelector('#yourEmail').style.backgroundColor = "LimeGreen";
-    } else {
-        document.querySelector('#yourEmail').style.backgroundColor = "red";
-    }
-
-    disableOrEnableEvaluationSubmitButton();
-}
-
-
 function checkReason() {
     var selectReasonDropdown = document.getElementById("sel1");
     var selectedReasonValue = selectReasonDropdown.options[selectReasonDropdown.selectedIndex].value;
