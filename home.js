@@ -53,8 +53,8 @@ function loadAllQuizzes() {
     quizRef.on('value', function (snapshot) {
         let values = snapshot.val();
         var quiz = "";
-        for (let i = 0; i < values.length; i++) {
-            quiz += getQuiz(i, values)
+        for (var key in values) {
+            quiz += getQuiz(key, values)
         }
         document.getElementById("quizzes").innerHTML = quiz;
     });
@@ -76,6 +76,11 @@ function login() {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
         alert(error.message);
     });
+}
+
+function loginWithGoogle() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
 }
 
 function signup() {
