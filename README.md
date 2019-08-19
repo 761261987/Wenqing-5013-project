@@ -30,6 +30,4 @@ Design Executive Summary
    - We still support interactive quiz by allowing users to check answers on the webpage. 
    - After user evaluation submit form is clicked, the program auto validates the evaluation form and warns the user about any error in the form. 
    - If a form is valid, it can be submitted to Firebase Realtime Database. The submitted form contains username which is automatically grabbed from user login info. 
- - 
-
 <body>
